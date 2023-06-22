@@ -1,12 +1,13 @@
 import { hashPassword, verifyPassword } from "@/helper/auth";
 import { connectToDB } from "@/helper/db";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
+import { authOptions } from "../auth/[...nextauth]";
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "PATCH") {
     // check if user is authenticated
-    const session = await getSession({ req: req });
+    const session = await getServerSession(req, res, authOptions);
     if (!session) {
       return res.status(401).json({ message: "Not authenticated!" });
     }
@@ -34,7 +35,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     // update user password
     const hasedPassword = await hashPassword(newPassword);
-    const result = await userCollection.updateOne(
+    await userCollection.updateOne(
       { email: userEmail },
       {
         $set: {

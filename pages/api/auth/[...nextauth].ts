@@ -3,7 +3,7 @@ import { connectToDB } from "@/helper/db";
 import NextAuth, { AuthOptions, User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       type: "credentials",
@@ -43,5 +43,10 @@ const authOptions: AuthOptions = {
       },
     }),
   ],
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXT_AUTH_SECRET,
 };
+
 export default NextAuth(authOptions);

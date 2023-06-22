@@ -51,7 +51,6 @@ const AuthForm = () => {
       // register user
       try {
         const result = await createUser(email, password);
-        console.log(result);
       } catch (error) {
         console.log(error);
       }
