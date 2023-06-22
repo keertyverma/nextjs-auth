@@ -39,8 +39,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
       const hashedPassword = await hashPassword(password);
       const result = await db
         .collection("users")
-        .insertOne({ email, hashedPassword });
-      console.log("result = ", result);
+        .insertOne({ email, password: hashedPassword });
 
       return res.status(201).json({ message: "User is created" });
     } catch (err) {
