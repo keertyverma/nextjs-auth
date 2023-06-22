@@ -9,7 +9,7 @@ const AuthPage = () => {
 
   useEffect(() => {
     if (status !== "loading" && session) {
-      // navigate authenticate userhomepage
+      // navigate authenticate user to homepage
       router.push("/");
     }
   }, [status, session]);
